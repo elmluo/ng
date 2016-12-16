@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>form-submit</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<style>
+		.container{
+			width: 300px;
+			padding: 100px auto;
+			border: 3px solid #0f00f0;
+			border-radius: 10px;
+		}
+		.sign-up{
+			padding-top: 20px;
+			padding-top: 15px;
+			background: pink;
+		}
+		.error{
+			color: red;
+			display: none;
+		}
+	</style>
+</head>
+<body ng-app="myForm">
+
+	<div class="container" ng-controller="signUpController">
+		<form ng-submit="submitForm()" class="sign-up" name="signUpForm">
+
+			<div class="form-group">
+				<label>用户名：</label>
+				<input type="text" name="username" 
+						class="form-control" 
+						ng-model="userdata.username"
+						required
+						minlength="2" 
+					 	maxlength="16"
+					>
+				<p class="error" ng-if="(signUpForm.username.$error.minlength
+										||signUpForm.username.$error.maxlength)
+										&&signUpForm.username.$touched"
+										>
+					输入用户名应在2~16位
+				</p>
+			</div>
+
+			<div class="form-group">
+				<label>密码：</label>
+				<input type="text" name="password" 
+						class="form-control" 
+						ng-model="userdata.password"
+						required 
+						minlength="6"
+						maxlength="256" 
+						>
+				<p class="error">输入密码应在6~256位</p>
+			</div>
+
+			<div class="form-group">
+				<label>确认密码：</label>
+				<input type="text" name="password2" 
+						class="form-control" 
+						ng-model="userdata.password2"
+						required
+						minlength="6"
+						maxlength="256"
+						>
+				<p class="error">输入密码应在6~256位</p>
+			</div>
+
+			<div class="form-group">
+				<input class="form-control btn btn-primary" type="submit">
+			</div>
+
+
+		</form>
+	</div>
+
+	<script src='angular.js'></script>
+	<script type="text/javascript">
+		angular.module('myForm',[])
+			.controller('signUpController', ['$scope', function ($scope) 
+			{
+				$scope.userdata={};
+				$scope.submitForm=function(){
+					// console.log($scope.userdata);
+					// 这里传参数一定要$scope.
+					if($scope.signUpForm.$invalid){
+						console.log('请你确认信息');
+					}else{
+						console.log('提交成功');
+					}
+				};
+			}])
+	</script>
+</body>
+</html>
